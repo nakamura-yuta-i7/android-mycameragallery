@@ -25,14 +25,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tmpImgsDir = ShattoTmpImgsDir(this)
 
-        // 最初に一時領域の写真は削除して初期化
-        tmpImgsDir.getFiles().forEach { it -> tmpImgsDir.deleteFile(filename = it.name) }
 
-        filesDirTextView.text = tmpImgsDir.absolutePath
-
-        initViewPager()
+//        tmpImgsDir = ShattoTmpImgsDir(this)
+//
+//        // 最初に一時領域の写真は削除して初期化
+//        tmpImgsDir.getFiles().forEach { it -> tmpImgsDir.deleteFile(filename = it.name) }
+//
+//        filesDirTextView.text = tmpImgsDir.absolutePath
+//
+//        initViewPager()
     }
 
     fun initViewPager() {
@@ -93,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                 val bitmap = data.getExtras().get("data") as Bitmap
                 val filename = Moment().format("yyyyMMddHHmmss") + ".png"
                 val fullpath = tmpImgsDir.getFullpath(filename)
-                var byteArray = tmpImgsDir.createPngFromBitmap(
+                var byteArray = tmpImgsDir.createJpgFromBitmap(
                     bitmap = bitmap, filename = filename)
 
                 val app = (application as MyApplication)

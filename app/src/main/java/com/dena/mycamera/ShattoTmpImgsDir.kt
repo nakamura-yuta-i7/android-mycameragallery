@@ -1,11 +1,18 @@
 package com.dena.mycamera
 
+import android.Manifest
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import android.support.v4.app.ActivityCompat
+import android.content.pm.PackageManager
+import android.app.Activity
+
+
 
 class ShattoTmpImgsDir(context: Context) {
 
@@ -33,15 +40,21 @@ class ShattoTmpImgsDir(context: Context) {
         val file = if (firstString=="/") File(filename) else File(absolutePath + filename)
         file.delete()
     }
-    // BitmapからPNGで保存
-    fun createPngFromBitmap(filename: String, bitmap: Bitmap): ByteArray {
+    fun createFileFullPath(filename: String): String {
+        return absolutePath + "/" + filename
+    }
+    // BitmapからJPGで保存
+    fun createJpgFromBitmap(filename: String, bitmap: Bitmap): ByteArray {
         val outStream = FileOutputStream(File(absolutePath + filename))
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream)
         outStream.close()
 
         val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         return baos.toByteArray()
+    }
+    fun getBitmapFromFullPath(fullpath: String): Bitmap {
+        return BitmapFactory.decodeFile(fullpath)
     }
     fun getFullpath(filename: String): String {
         return absolutePath + "/" + filename
